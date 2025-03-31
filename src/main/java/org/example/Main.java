@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.order.OrderService;
 import org.example.stocksSimulator.MockStockUpdaterRunner;
 import org.example.stocksSimulator.Stock;
 import org.example.user.User;
@@ -9,6 +10,7 @@ import java.util.concurrent.*;
 public class Main {
     public static void main(String[] args) {
         MockStockUpdaterRunner mockStockUpdaterRunner = new MockStockUpdaterRunner();
+        OrderService orderService = new OrderService();
         ExecutorService executors = Executors.newFixedThreadPool(12);
         for (int i = 0; i<= 100_000; i++) {
             mockStockUpdaterRunner.addStock(
@@ -17,11 +19,11 @@ public class Main {
         }
 
         for(int i = 0; i <10; i++) {
-            User user = new User(mockStockUpdaterRunner, i);
+            User user = new User(mockStockUpdaterRunner, i, orderService);
             executors.submit(user);
         }
 
-        Thread thread = new Thread(mockStockUpdaterRunner);
-        thread.start();
+        executors.submit(mockStockUpdaterRunner);
+        executors.submit(orderService);
     }
 }

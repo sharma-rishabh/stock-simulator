@@ -24,7 +24,6 @@ public class UpdateStockPrices extends RecursiveAction {
             new UpdateStockPrices(firstHalf).fork();
             new UpdateStockPrices(secondHalf).fork();
         } else {
-            System.out.println(">> Updating stocks in "+ Thread.currentThread().getName());
             for (Stock stock: this.stocks) {
                 boolean moveUp = Math.random() > 0.5;
                 updateStockPrice(stock, moveUp);

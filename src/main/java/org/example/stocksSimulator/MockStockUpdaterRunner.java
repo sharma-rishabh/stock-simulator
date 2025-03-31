@@ -17,7 +17,7 @@ public class MockStockUpdaterRunner implements Subject, Runnable{
         this.stocks.add(stock);
     }
 
-    public List<Stock> getStocks() {
+    public ArrayList<Stock> getStocks() {
         return this.stocks;
     }
 
@@ -33,6 +33,8 @@ public class MockStockUpdaterRunner implements Subject, Runnable{
 
     @Override
     public void notifyObservers() {
+        System.out.println("Notifying Observers");
+        System.out.println("Observers" + this.observers);
         for(Observer observer: this.observers) {
             observer.update();
         }
